@@ -9,8 +9,8 @@ Date: 2026-06-10
 ### Local Source CLI
 - `pnpm lint` — PASS (0 errors)
 - `pnpm build` — PASS (compiles to dist/)
-- `pnpm test:unit` — PASS (504 tests, 49 files)
-- `pnpm test:browser` — PASS (29 tests, 2 files)
+- `pnpm test:unit` — PASS (485 tests, 48 files)
+- `pnpm test:browser` — PASS (48 tests, 3 files)
 - `pnpm test:run` — PASS (533 tests, 51 files)
 - `pnpm exec tsx src/cli.ts release-check --json` — PASS (29/29)
 - `pnpm exec tsx src/cli.ts status --json` — PASS (local_ready)
@@ -40,6 +40,7 @@ Date: 2026-06-10
 - Jobs: lint, test-unit, test-browser, test-run, release-check
 - Trigger: push/pull_request to main
 - Pushed to: https://github.com/forgeashtechnologies-wq/forgeqa-mvp
+- CI fix: app-scanner.test.ts moved to browser tests (requires Chromium)
 
 ## Package Metadata
 - Name: `@forgeqa/mvp`
