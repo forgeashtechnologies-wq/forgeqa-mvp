@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>External Risk Form</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+    .section { margin-bottom: 24px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; }
+    input, button { padding: 8px 12px; margin-bottom: 8px; font-size: 14px; }
+    input { width: 100%; box-sizing: border-box; }
+    button { cursor: pointer; border: 1px solid #ccc; background: #f5f5f5; }
+    button:hover { background: #e5e5e5; }
+    .risky { background: #fff5f5; border-color: #feb2b2; }
+    .safe { background: #f0fff4; border-color: #9ae6b4; }
+    #status { margin-top: 16px; padding: 12px; border-radius: 6px; background: #f7fafc; }
+  </style>
+</head>
+<body>
+  <h1>External Risk Form — Policy Test</h1>
+  <p>This fixture is designed to test ForgeQA execution policy gates. No real mutations occur.</p>
+
+  <div class="section safe">
+    <label for="search-input">Search Input</label>
+    <input type="text" id="search-input" data-testid="search-input" placeholder="Type to search...">
+    <button data-testid="safe-btn" onclick="setStatus('Safe button clicked')">Safe Action</button>
+  </div>
+
+  <div class="section risky">
+    <label>Form Submission</label>
+    <button data-testid="submit-btn" onclick="setStatus('Submit button clicked')">Submit Registration</button>
+  </div>
+
+  <div class="section risky">
+    <label>Destructive Action</label>
+    <button data-testid="delete-btn" onclick="setStatus('Delete button clicked')">Delete User</button>
+  </div>
+
+  <div class="section risky">
+    <label>Payment Action</label>
+    <button data-testid="pay-btn" onclick="setStatus('Pay button clicked')">Checkout / Pay Now</button>
+  </div>
+
+  <div class="section risky">
+    <label>Email Send Action</label>
+    <button data-testid="send-btn" onclick="setStatus('Send button clicked')">Send Invite to Users</button>
+  </div>
+
+  <div class="section risky">
+    <label for="password-input">Credential Field</label>
+    <input type="password" id="password-input" data-testid="password-input" placeholder="Enter password">
+  </div>
+
+  <div class="section risky">
+    <label for="token-input">Token Field</label>
+    <input type="text" id="token-input" data-testid="token-input" placeholder="API token">
+  </div>
+
+  <div id="status" data-testid="status-box">Status: idle</div>
+
+  <script>
+    function setStatus(msg) {
+      document.getElementById('status').textContent = 'Status: ' + msg;
+    }
+  </script>
+</body>
+</html>

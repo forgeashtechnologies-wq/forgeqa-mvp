@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Flow Policy Gate</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+    .section { margin-bottom: 24px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; }
+    .payment { background: #fffaf0; border-color: #fbd38d; }
+    .safe { background: #f0fff4; border-color: #9ae6b4; }
+    button, input { padding: 8px 12px; font-size: 14px; }
+    button { cursor: pointer; border: 1px solid #ccc; background: #fff; }
+    .payment button { background: #feebc8; border-color: #f6ad55; }
+  </style>
+</head>
+<body>
+  <h1 data-testid="payment-gate-page">Payment Flow Policy Gate</h1>
+  <p>This page tests that ForgeQA blocks payment and credential actions while allowing safe pricing info.</p>
+
+  <div class="section payment" data-testid="payment-section">
+    <h2>Payment Actions</h2>
+    <label for="card-number">Card Number</label>
+    <input type="text" id="card-number" data-testid="card-number-input" placeholder="0000 0000 0000 0000">
+    <button type="button" data-testid="checkout-button">Checkout</button>
+    <button type="button" data-testid="subscribe-button">Subscribe</button>
+  </div>
+
+  <div class="section safe" data-testid="safe-section">
+    <h2>Pricing Info</h2>
+    <div data-testid="pricing-info">Basic plan: $0/month for testing</div>
+    <button type="button" data-testid="view-pricing-button">View Pricing Details</button>
+  </div>
+
+  <div id="status" data-testid="payment-status">No payment action</div>
+
+  <script>
+    document.querySelector('[data-testid="checkout-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'Checkout attempted (BLOCKED by policy)';
+    });
+    document.querySelector('[data-testid="subscribe-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'Subscribe attempted (BLOCKED by policy)';
+    });
+    document.querySelector('[data-testid="view-pricing-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'Pricing details viewed (ALLOWED)';
+    });
+  </script>
+</body>
+</html>

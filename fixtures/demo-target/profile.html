@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ForgeQA Demo — Profile</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 480px;
+      margin: 48px auto;
+      padding: 0 16px;
+      color: #1a1a1a;
+      background: #f5f5f5;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 8px; }
+    .subtitle { color: #666; margin-bottom: 24px; }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .field { margin-bottom: 16px; }
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 4px;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    input:focus { outline: none; border-color: #2563eb; }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #1d4ed8; }
+    .hidden { display: none !important; }
+    .success {
+      background: #dcfce7;
+      color: #166534;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 16px;
+      font-weight: 500;
+    }
+    .avatar-preview {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 12px 0;
+      overflow: hidden;
+    }
+    .avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .profile-name { font-size: 1.25rem; font-weight: 700; }
+    .profile-meta { color: #666; font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <div id="profile-section" data-testid="profile-page">
+    <h1>Your Profile</h1>
+    <p class="subtitle">Complete your alumni profile</p>
+    <div class="card">
+      <div class="profile-header">
+        <div class="avatar-preview" data-testid="profile-avatar">
+          <span id="avatar-placeholder">No photo</span>
+          <img id="avatar-img" class="hidden" alt="Avatar">
+        </div>
+        <div>
+          <div class="profile-name" data-testid="profile-name" id="profile-display-name">—</div>
+          <div class="profile-meta" id="profile-email">—</div>
+        </div>
+      </div>
+
+      <form data-testid="profile-form" onsubmit="event.preventDefault(); handleSaveProfile();">
+        <div class="field">
+          <label for="department">Department</label>
+          <input type="text" id="department" data-testid="department-input" placeholder="Computer Science">
+        </div>
+        <div class="field">
+          <label for="batch">Batch / Year</label>
+          <input type="text" id="batch" data-testid="batch-input" placeholder="2018">
+        </div>
+        <div class="field">
+          <label for="bio">Bio</label>
+          <input type="text" id="bio" data-testid="bio-input" placeholder="Tell us about yourself">
+        </div>
+        <div class="field">
+          <label for="avatar">Avatar</label>
+          <input type="file" id="avatar" data-testid="avatar-upload" accept="image/*" onchange="handleAvatarPreview(this)">
+        </div>
+        <button type="submit" data-testid="profile-save">Save Profile</button>
+      </form>
+
+      <div id="saved-message" class="success hidden" data-testid="profile-saved">
+        Profile saved successfully!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function init() {
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get('name') || 'Alumni';
+      const email = params.get('email') || 'alumni@forgeqa.test';
+      document.getElementById('profile-display-name').textContent = decodeURIComponent(name);
+      document.getElementById('profile-email').textContent = decodeURIComponent(email);
+    })();
+
+    function handleAvatarPreview(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('avatar-img');
+          img.src = e.target.result;
+          img.classList.remove('hidden');
+          document.getElementById('avatar-placeholder').classList.add('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function handleSaveProfile() {
+      document.getElementById('saved-message').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

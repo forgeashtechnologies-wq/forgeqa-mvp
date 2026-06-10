@@ -1,0 +1,57 @@
+{
+  "name": "@forgeqa/mvp",
+  "version": "0.1.0",
+  "description": "ForgeQA MVP — QA Proof OS for AI-built web apps (local CLI engine)",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "forgeqa": "dist/cli.js"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "forgeqa": "tsx src/cli.ts",
+    "test": "vitest",
+    "test:unit": "vitest run --exclude src/executor/playwright.test.ts --exclude src/executor/dom-analyzer.test.ts",
+    "test:browser": "vitest run src/executor/playwright.test.ts src/executor/dom-analyzer.test.ts",
+    "test:run": "vitest run",
+    "test:ci": "vitest run",
+    "check": "tsx src/cli.ts release-check --json",
+    "setup:browsers": "playwright install chromium",
+    "lint": "tsc --noEmit",
+    "demo:password-reset": "tsx src/cli.ts run 'password reset' --demo --validate --json",
+    "demo:dashboard": "tsx src/cli.ts dashboard --json"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "qa",
+    "testing",
+    "playwright",
+    "e2e",
+    "forgeqa"
+  ],
+  "packageManager": "pnpm@10.8.0",
+  "files": [
+    "dist",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "commander": "^13.1.0",
+    "nanoid": "^5.1.5",
+    "playwright": "^1.52.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}

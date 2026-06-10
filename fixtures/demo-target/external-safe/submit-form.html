@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>External Safe Submit</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+    .section { margin-bottom: 24px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; background: #f0fff4; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; }
+    input, button { padding: 8px 12px; font-size: 14px; }
+    input { width: 100%; box-sizing: border-box; }
+    button { cursor: pointer; border: 1px solid #ccc; background: #fff; }
+    button:hover { background: #f5f5f5; }
+    #status { margin-top: 16px; padding: 12px; border-radius: 6px; background: #f7fafc; }
+  </style>
+</head>
+<body>
+  <h1 data-testid="external-safe-page">External Safe Submit</h1>
+  <p>This form is safe for external-mode ForgeQA testing. No real data is sent anywhere.</p>
+
+  <form class="section" data-testid="safe-submit-form" id="safe-form">
+    <label for="query-input">Search Query</label>
+    <input type="text" id="query-input" data-testid="search-query-input" placeholder="Type a query..." required>
+    <button type="submit" data-testid="safe-submit-button">Submit</button>
+  </form>
+
+  <div id="status" data-testid="safe-submit-status">Status: waiting</div>
+
+  <script>
+    document.getElementById('safe-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('status').textContent = 'Submitted safely for local test';
+    });
+  </script>
+</body>
+</html>

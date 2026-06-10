@@ -1,0 +1,86 @@
+import type { WorkflowTemplate } from '../types.js';
+
+const template: WorkflowTemplate = {
+  id: 'generic.passwordResetRequest',
+  name: 'Password Reset Request',
+  description:
+    'Validate a password reset request UI without sending real email. Tests the forgot-password form and confirmation message.',
+  category: 'auth',
+  difficulty: 'easy',
+  estimatedDurationSeconds: 60,
+  requiredData: 'users',
+  tags: ['auth', 'password', 'reset', 'form', 'email'],
+  roles: ['user'],
+  supportedModes: ['demo'],
+  allowExternalSubmit: false,
+  allowExternalUpload: false,
+  demoRoutes: ['/forgot-password'],
+  riskLevel: 'low',
+  requiresAuth: false,
+  requiresNetwork: false,
+  requiresFileUpload: false,
+  destructiveAction: false,
+  expectedArtifacts: ['plan.json', 'data.json', 'run.json', 'screenshots/', 'trace.zip', 'report.md', 'report.html', 'cleanup-report.md'],
+  promptMatchers: [
+    'password reset',
+    'forgot password',
+    'reset password flow',
+    'user requests password reset',
+  ],
+  matchers: [
+    'password reset',
+    'forgot password',
+    'reset password',
+  ],
+  baseUrl: 'https://forgeqa.test',
+
+  fixtureRoute: '/forgot-password',
+  requiredFixtureTestIds: ['[data-testid="forgot-password-form"]', '[data-testid="email-input"]', '[data-testid="reset-request-submit"]'],
+  expectedMissingSelectors: false,
+  fixtureValidationMode: 'strict' as const,
+  scopeCovered: ['Reset request form loads', 'Safe test email accepted', 'Confirmation message shown'],
+  scopeNotCovered: ['Real email delivery', 'Reset token validity', 'Inbox receipt', 'Password update after clicking email link', 'Token expiration logic'],
+  scopeAssumptions: ['Demo fixture renders correctly'],
+  scopeBoundaries: ['Local demo server only'],
+  humanReviewRecommended: ['Error message clarity', 'Accessibility of reset form'],
+  defaultViewport: 'desktop',
+  steps: [
+    {
+      order: 0,
+      description: 'Navigate to forgot password page',
+      action: 'navigate',
+      target: '/forgot-password',
+      screenshot: true,
+    },
+    {
+      order: 1,
+      description: 'Fill reset email',
+      action: 'fill',
+      target: '[data-testid="reset-email-input"]',
+      screenshot: false,
+    },
+    {
+      order: 2,
+      description: 'Submit reset request',
+      action: 'click',
+      target: '[data-testid="reset-submit"]',
+      screenshot: true,
+    },
+    {
+      order: 3,
+      description: 'Wait for confirmation',
+      action: 'wait',
+      value: '1000',
+      screenshot: false,
+    },
+    {
+      order: 4,
+      description: 'Assert confirmation message visible',
+      action: 'assertVisible',
+      target: '[data-testid="reset-confirmation"]',
+      screenshot: true,
+    },
+  ],
+};
+
+export default template;

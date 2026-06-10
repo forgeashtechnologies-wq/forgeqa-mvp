@@ -1,0 +1,7 @@
+{
+  "defaultViewport": "desktop",
+  "defaultMode": "demo",
+  "artifactsDir": "artifacts/runs",
+  "recentRunsLimit": 20,
+  "strictPolicyDefault": false
+}

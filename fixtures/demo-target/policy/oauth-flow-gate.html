@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OAuth Flow Policy Gate</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+    .section { margin-bottom: 24px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; }
+    .auth { background: #ebf8ff; border-color: #90cdf4; }
+    .safe { background: #f0fff4; border-color: #9ae6b4; }
+    button { padding: 8px 12px; font-size: 14px; cursor: pointer; border: 1px solid #ccc; background: #fff; }
+    .auth button { background: #bee3f8; border-color: #63b3ed; }
+  </style>
+</head>
+<body>
+  <h1 data-testid="oauth-gate-page">OAuth Flow Policy Gate</h1>
+  <p>This page tests that ForgeQA blocks OAuth/social login actions while allowing safe auth info.</p>
+
+  <div class="section auth" data-testid="auth-section">
+    <h2>Social Login</h2>
+    <button type="button" data-testid="google-signin-button">Sign in with Google</button>
+    <button type="button" data-testid="github-signin-button">Sign in with GitHub</button>
+    <button type="button" data-testid="sso-button">SSO Login</button>
+  </div>
+
+  <div class="section safe" data-testid="safe-section">
+    <h2>Auth Info</h2>
+    <div data-testid="auth-info-panel">Authentication options for local testing only.</div>
+    <button type="button" data-testid="view-auth-info-button">View Auth Info</button>
+  </div>
+
+  <div id="status" data-testid="auth-status">No auth action</div>
+
+  <script>
+    document.querySelector('[data-testid="google-signin-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'Google sign-in attempted (BLOCKED by policy)';
+    });
+    document.querySelector('[data-testid="github-signin-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'GitHub sign-in attempted (BLOCKED by policy)';
+    });
+    document.querySelector('[data-testid="sso-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'SSO login attempted (BLOCKED by policy)';
+    });
+    document.querySelector('[data-testid="view-auth-info-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'Auth info viewed (ALLOWED)';
+    });
+  </script>
+</body>
+</html>

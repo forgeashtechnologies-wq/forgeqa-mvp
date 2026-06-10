@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Table</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; }
+  h1 { font-size: 22px; margin-bottom: 16px; }
+  .search-bar { display: flex; gap: 8px; margin-bottom: 20px; }
+  .search-bar input { flex: 1; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; }
+  .search-bar button { padding: 10px 16px; font-size: 14px; background: #0d6efd; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px; border-bottom: 1px solid #dee2e6; }
+  th { font-weight: 600; background: #f8f9fa; }
+  .pagination { display: flex; gap: 8px; margin-top: 20px; }
+  .pagination button { padding: 8px 14px; border: 1px solid #dee2e6; background: #fff; border-radius: 6px; cursor: pointer; }
+  .pagination button.active { background: #0d6efd; color: #fff; border-color: #0d6efd; }
+  .search-result { display: none; }
+  .search-result.visible { display: block; margin-top: 12px; color: #0f5132; }
+</style>
+</head>
+<body>
+  <h1>Search Table</h1>
+  <div class="search-bar">
+    <input type="text" id="searchInput" data-testid="search-input" placeholder="Search records...">
+    <button id="searchBtn" data-testid="search-btn">Search</button>
+    <button id="clearBtn" data-testid="clear-search">Clear</button>
+  </div>
+
+  <div id="searchResult" class="search-result" data-testid="search-result">Found 1 result</div>
+
+  <table id="recordsTable">
+    <thead>
+      <tr><th>Name</th><th>Role</th><th>Department</th></tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr data-testid="table-row-0"><td>Alice Johnson</td><td>Engineer</td><td>Engineering</td></tr>
+      <tr data-testid="table-row-1"><td>Bob Smith</td><td>Designer</td><td>Design</td></tr>
+      <tr data-testid="table-row-2"><td>Carol White</td><td>Manager</td><td>Product</td></tr>
+      <tr data-testid="table-row-3"><td>David Brown</td><td>Analyst</td><td>Data</td></tr>
+      <tr data-testid="table-row-4"><td>Eve Davis</td><td>Engineer</td><td>Engineering</td></tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button id="page1" class="active" data-testid="page-1-indicator">1</button>
+    <button id="page2" data-testid="next-page">2</button>
+  </div>
+
+  <div id="page2Indicator" data-testid="page-2-indicator" style="display:none; margin-top:12px; color:#0f5132;">Page 2 loaded</div>
+
+  <script>
+    const allRows = Array.from(document.querySelectorAll('#tableBody tr'));
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const tableBody = document.getElementById('tableBody');
+    const searchResult = document.getElementById('searchResult');
+    const page1Btn = document.getElementById('page1');
+    const page2Btn = document.getElementById('page2');
+    const page2Indicator = document.getElementById('page2Indicator');
+
+    function filterTable(query) {
+      const q = query.toLowerCase().trim();
+      let visible = 0;
+      allRows.forEach((row) => {
+        const text = row.textContent.toLowerCase();
+        if (text.includes(q)) {
+          row.style.display = '';
+          visible++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      return visible;
+    }
+
+    searchBtn.addEventListener('click', function() {
+      const count = filterTable(searchInput.value);
+      searchResult.textContent = 'Found ' + count + ' result(s)';
+      searchResult.classList.add('visible');
+    });
+
+    clearBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      filterTable('');
+      searchResult.classList.remove('visible');
+      page2Indicator.style.display = 'none';
+    });
+
+    page2Btn.addEventListener('click', function() {
+      page1Btn.classList.remove('active');
+      page2Btn.classList.add('active');
+      page2Indicator.style.display = 'block';
+    });
+  </script>
+</body>
+</html>

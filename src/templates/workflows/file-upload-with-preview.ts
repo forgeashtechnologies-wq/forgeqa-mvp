@@ -1,0 +1,87 @@
+import type { WorkflowTemplate } from '../types.js';
+
+const template: WorkflowTemplate = {
+  id: 'generic.fileUploadWithPreview',
+  name: 'File Upload with Preview',
+  description:
+    'Test file upload input, preview rendering, and evidence capture.',
+  category: 'upload',
+  difficulty: 'easy',
+  estimatedDurationSeconds: 60,
+  requiredData: 'files',
+  tags: ['upload', 'file', 'preview', 'image', 'avatar'],
+  roles: ['user'],
+  supportedModes: ['demo'],
+  allowExternalSubmit: false,
+  allowExternalUpload: false,
+  demoRoutes: ['/file-upload'],
+  riskLevel: 'low',
+  requiresAuth: false,
+  requiresNetwork: false,
+  requiresFileUpload: true,
+  destructiveAction: false,
+  expectedArtifacts: ['plan.json', 'data.json', 'run.json', 'screenshots/', 'trace.zip', 'report.md', 'report.html', 'cleanup-report.md'],
+  promptMatchers: [
+    'file upload preview',
+    'upload image',
+    'avatar upload preview',
+    'upload resume',
+  ],
+  matchers: [
+    'file upload',
+    'upload preview',
+    'upload image',
+    'avatar upload',
+  ],
+  baseUrl: 'https://forgeqa.test',
+
+  fixtureRoute: '/file-upload',
+  requiredFixtureTestIds: ['[data-testid="upload-form"]', '[data-testid="file-input"]', '[data-testid="preview-image"]'],
+  expectedMissingSelectors: false,
+  fixtureValidationMode: 'strict' as const,
+  scopeCovered: ['Local generated file upload', 'Preview visible after upload', 'Filename visible'],
+  scopeNotCovered: ['Virus scanning', 'Server-side storage persistence', 'Production file permissions', 'Large-file performance', 'MIME type validation on server'],
+  scopeAssumptions: ['Demo fixture renders correctly'],
+  scopeBoundaries: ['Local demo server only', 'Small generated files only'],
+  humanReviewRecommended: ['Upload error handling', 'Drag-and-drop UX'],
+  defaultViewport: 'desktop',
+  steps: [
+    {
+      order: 0,
+      description: 'Navigate to file upload page',
+      action: 'navigate',
+      target: '/file-upload',
+      screenshot: true,
+    },
+    {
+      order: 1,
+      description: 'Upload generated file',
+      action: 'upload',
+      target: '[data-testid="file-input"]',
+      screenshot: true,
+    },
+    {
+      order: 2,
+      description: 'Wait for preview to render',
+      action: 'wait',
+      value: '1000',
+      screenshot: false,
+    },
+    {
+      order: 3,
+      description: 'Assert preview visible',
+      action: 'assertVisible',
+      target: '[data-testid="file-preview"]',
+      screenshot: true,
+    },
+    {
+      order: 4,
+      description: 'Assert file name visible',
+      action: 'assertVisible',
+      target: '[data-testid="file-name"]',
+      screenshot: true,
+    },
+  ],
+};
+
+export default template;

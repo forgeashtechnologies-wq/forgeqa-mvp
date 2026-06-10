@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duplicate Test ID Test</title>
+<style>
+  body { font-family: sans-serif; padding: 24px; max-width: 600px; margin: 0 auto; }
+  .item { padding: 8px; border: 1px solid #ddd; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+  <h1>Duplicate Test ID Diagnostic</h1>
+
+  <!-- Same data-testid used twice — visible -->
+  <div class="item" data-testid="card-item">
+    <p>Card 1</p>
+  </div>
+  <div class="item" data-testid="card-item">
+    <p>Card 2</p>
+  </div>
+
+  <!-- Duplicate ID attribute -->
+  <input id="email" type="email" placeholder="Primary email">
+  <input id="email" type="email" placeholder="Secondary email (same ID!)">
+
+  <!-- Responsive hidden duplicate — one visible, one hidden -->
+  <div data-testid="responsive-header" class="desktop-only" style="display: block;">Desktop Header</div>
+  <div data-testid="responsive-header" class="mobile-only" style="display: none;">Mobile Header</div>
+</body>
+</html>

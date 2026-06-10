@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media Accessibility Test</title>
+<style>
+  body { font-family: sans-serif; padding: 24px; max-width: 600px; margin: 0 auto; }
+  .image-row { margin-bottom: 24px; }
+  .placeholder { width: 120px; height: 80px; background: #ddd; display: inline-block; }
+</style>
+</head>
+<body>
+  <h1>Media Accessibility Diagnostic</h1>
+
+  <!-- Informative image missing alt — should be flagged -->
+  <div class="image-row">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80'%3E%3Crect fill='%23ddd' width='120' height='80'/%3E%3Ctext x='60' y='40' text-anchor='middle' dy='.3em'%3EChart%3C/text%3E%3C/svg%3E" data-testid="chart-img">
+    <p>This chart conveys data but has no alt text.</p>
+  </div>
+
+  <!-- Decorative image with empty alt — should NOT be flagged -->
+  <div class="image-row">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80'%3E%3Crect fill='%23eee' width='120' height='80'/%3E%3C/svg%3E" alt="" data-testid="decorative-img">
+    <p>This decorative image has empty alt (role=presentation).</p>
+  </div>
+
+  <!-- Image with meaningful alt — should NOT be flagged -->
+  <div class="image-row">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80'%3E%3Crect fill='%239cf' width='120' height='80'/%3E%3Ctext x='60' y='40' text-anchor='middle' dy='.3em'%3ELogo%3C/text%3E%3C/svg%3E" alt="Company logo" data-testid="logo-img">
+    <p>This image has meaningful alt text.</p>
+  </div>
+</body>
+</html>

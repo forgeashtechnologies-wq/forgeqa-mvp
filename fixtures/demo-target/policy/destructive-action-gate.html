@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destructive Action Policy Gate</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+    .section { margin-bottom: 24px; padding: 16px; border: 1px solid #ddd; border-radius: 8px; }
+    .destructive { background: #fff5f5; border-color: #feb2b2; }
+    .safe { background: #f0fff4; border-color: #9ae6b4; }
+    button { padding: 8px 12px; font-size: 14px; cursor: pointer; border: 1px solid #ccc; background: #fff; }
+    button:hover { background: #f5f5f5; }
+    .destructive button { background: #fed7d7; border-color: #fc8181; }
+    .destructive button:hover { background: #feb2b2; }
+  </style>
+</head>
+<body>
+  <h1 data-testid="destructive-gate-page">Destructive Action Policy Gate</h1>
+  <p>This page tests that ForgeQA blocks destructive actions while allowing safe read-only actions.</p>
+
+  <div class="section destructive" data-testid="destructive-section">
+    <h2>Danger Zone</h2>
+    <button type="button" data-testid="delete-button">Delete All Records</button>
+    <button type="button" data-testid="archive-button">Archive All</button>
+    <button type="button" data-testid="reset-database-button">Reset Database</button>
+  </div>
+
+  <div class="section safe" data-testid="safe-section">
+    <h2>Safe Zone</h2>
+    <button type="button" data-testid="read-only-button">View Summary</button>
+  </div>
+
+  <div id="status" data-testid="action-status">No action taken</div>
+
+  <script>
+    document.querySelector('[data-testid="delete-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'Would delete all records (BLOCKED by policy)';
+    });
+    document.querySelector('[data-testid="archive-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'Would archive all (BLOCKED by policy)';
+    });
+    document.querySelector('[data-testid="reset-database-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'Would reset database (BLOCKED by policy)';
+    });
+    document.querySelector('[data-testid="read-only-button"]').addEventListener('click', function() {
+      document.getElementById('status').textContent = 'Viewing summary (ALLOWED)';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slow Loading Test</title>
+<style>
+  body { font-family: sans-serif; padding: 24px; max-width: 600px; margin: 0 auto; }
+  .spinner { display: none; width: 32px; height: 32px; border: 4px solid #ccc; border-top: 4px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite; }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  .content { display: none; margin-top: 16px; }
+  .content.visible { display: block; }
+  .btn { padding: 8px 16px; background: #007bff; color: #fff; border: none; cursor: pointer; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+</style>
+</head>
+<body>
+  <h1>Slow Loading Diagnostic</h1>
+
+  <div class="spinner" data-testid="loading-spinner" id="spinner"></div>
+
+  <button class="btn" data-testid="delayed-btn" id="btn" disabled>Wait...</button>
+
+  <div class="content" data-testid="delayed-content" id="content">
+    <p>This content appeared after a 3-second delay.</p>
+  </div>
+
+  <script>
+    // Content appears after 3 seconds
+    setTimeout(() => {
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('btn').disabled = false;
+      document.getElementById('btn').textContent = 'Ready';
+      document.getElementById('content').classList.add('visible');
+    }, 3000);
+    // Show spinner immediately
+    document.getElementById('spinner').style.display = 'block';
+  </script>
+</body>
+</html>

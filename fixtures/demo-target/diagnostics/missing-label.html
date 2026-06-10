@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missing Label Test</title>
+<style>
+  body { font-family: sans-serif; padding: 24px; max-width: 600px; margin: 0 auto; }
+  .field { margin-bottom: 16px; }
+</style>
+</head>
+<body>
+  <h1>Missing Label Diagnostic</h1>
+
+  <!-- Unlabeled input — no label, no aria-label, no aria-labelledby, no placeholder -->
+  <div class="field">
+    <input type="text" data-testid="unlabeled-input">
+  </div>
+
+  <!-- Empty button with no text or aria-label -->
+  <button data-testid="empty-btn"></button>
+
+  <!-- Icon-only button without aria-label -->
+  <button data-testid="icon-btn">
+    <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7"/></svg>
+  </button>
+
+  <!-- Properly labeled control — should NOT be flagged -->
+  <div class="field">
+    <label for="good-email">Email</label>
+    <input type="email" id="good-email" data-testid="labeled-input">
+  </div>
+
+  <!-- Input with explicit aria-label — should NOT be flagged -->
+  <div class="field">
+    <input type="text" data-testid="aria-input" aria-label="Search query">
+  </div>
+</body>
+</html>
